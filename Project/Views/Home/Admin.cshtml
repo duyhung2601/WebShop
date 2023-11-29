@@ -1,0 +1,636 @@
+﻿@{
+    ViewData["Title"] = "Admin";
+    Layout = null;
+    ShopContext context = new ShopContext();
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Project.Models;
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@ViewData["Title"]  </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/flaticon.css">
+    <link rel="stylesheet" href="~/css/slicknav.css">
+    <link rel="stylesheet" href="~/css/animate.min.css">
+    <link rel="stylesheet" href="~/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="~/css/themify-icons.css">
+    <link rel="stylesheet" href="~/css/slick.css">
+    <link rel="stylesheet" href="~/css/nice-select.css">
+    <link rel="stylesheet" href="~/css/style.css">
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+</head>
+
+<body>
+
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="~/img/logo/logo.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start -->
+    <style>
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Chiều cao của trang */
+        }
+    </style>
+    <header>
+
+        <!-- Header Start -->
+        @if (ViewBag.id == null)
+        {
+            <div class="header-area">
+                <div class="main-header ">
+                    <div class="header-bottom  header-sticky">
+                        <div class="container-fluid">
+                            <div class="row align-items-center">
+                                <!-- Logo -->
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3">
+                                    <div class="logo">
+                                        <a href="/Home"><img src="~/img/logo/logo.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-8 col-md-7 col-sm-5">
+                                    <!-- Main-menu -->
+                                    <div class="main-menu f-right d-none d-lg-block">
+                                        <nav>
+
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-3 col-md-3 col-sm-3 fix-card">
+                                    <ul class="header-right f-right d-none d-lg-block d-flex justify-content-between">
+                                        <li class="d-none d-xl-block">
+
+                                        </li>
+                                        <li>
+
+                                        </li>
+                                        <li class="d-none d-lg-block"> <a href="/Home/FormLogin" class="btn header-btn">Login</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Mobile Menu -->
+                                <div class="col-12">
+                                    <div class="mobile_menu d-block d-lg-none"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="header-area">
+                <div class="main-header ">
+                    <div class="header-bottom  header-sticky">
+                        <div class="container-fluid">
+                            <div class="row align-items-center">
+                                <!-- Logo -->
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3">
+                                    <div class="logo">
+                                        <a href="/Home"><img src="~/img/logo/logo.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-8 col-md-7 col-sm-5">
+                                    <!-- Main-menu -->
+                                    <div class="main-menu f-right d-none d-lg-block">
+                                        <nav>
+
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-3 col-md-3 col-sm-3 fix-card">
+                                    <ul class="header-right f-right d-none d-lg-block d-flex justify-content-between">
+                                        <li class="d-none d-xl-block">
+                                            <div class="form-box f-right ">
+                                            </div>
+                                        </li>
+                                        <li>
+
+                                        </li>
+                                        <li class="d-none d-lg-block">Hello @ViewBag.name</li>
+                                        <li class="d-none d-lg-block"> <a href="/Home/Thoat" class="btn header-btn">Logout</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Mobile Menu -->
+                                <div class="col-12">
+                                    <div class="mobile_menu d-block d-lg-none"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <!-- Header End -->
+    </header>
+    
+
+        @if (ViewBag.role == "1")
+        {
+            <style>
+                .modal {
+                    display: none;
+                    position: fixed;
+                    z-index: 999;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    overflow: auto;
+                    background-color: rgba(0, 0, 0, 0.4);
+                }
+
+                .modal-content {
+                    background-color: #fff;
+                    margin: 15% auto;
+                    padding: 20px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    width: 80%;
+                    max-width: 400px;
+                }
+
+                .modal-close {
+                    color: #aaa;
+                    float: right;
+                    font-size: 28px;
+                    font-weight: bold;
+                    cursor: pointer;
+                }
+
+                    .modal-close:hover,
+                    .modal-close:focus {
+                        color: black;
+                        text-decoration: none;
+                        cursor: pointer;
+                    }
+
+                form h4 {
+                    margin-top: 0;
+                    margin-bottom: 20px;
+                }
+
+                .form-group {
+                    margin-bottom: 20px;
+                }
+
+                    .form-group label {
+                        display: block;
+                        font-weight: bold;
+                        margin-bottom: 5px;
+                    }
+
+                    .form-group input,
+                    .form-group select {
+                        display: block;
+                        width: 100%;
+                        padding: 10px;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                        font-size: 14px;
+                    }
+
+                    .form-group button[type="submit"] {
+                        padding: 10px 20px;
+                        background-color: #4CAF50;
+                        color: #fff;
+                        border: none;
+                        border-radius: 5px;
+                        font-size: 16px;
+                        cursor: pointer;
+                    }
+
+                        .form-group button[type="submit"]:hover {
+                            background-color: #45a049;
+                        }
+            </style>
+
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="modal-close" onclick="closeModal()">&times;</span>
+                    <form action="/Home/AddProduct" method="post">
+                        <h4>Sản phẩm mới</h4>
+                        <div class="form-group">
+                            <label for="product-name">Product Name:</label>
+                            <input type="text" id="product-name" name="product-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Image:</label>
+                            <input type="text" id="product-image" name="image" src="">
+                            <image src="" />
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price:</label>
+                            <input type="number" id="product-price" name="price">
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" id="product-quantity" name="quantity">
+                        </div>
+                        <div class="form-group" style="display:flex">
+                            <label for="status">Danh mục:</label>
+                            <select id="product-status" name="category">
+                                @foreach (Category i in ViewBag.lsp)
+                                {
+                                    <option value="@i.Id">@i.CategoryName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <script>
+                function openModal() {
+                    document.getElementById("myModal").style.display = "block";
+                }
+
+                function closeModal() {
+                    document.getElementById("myModal").style.display = "none";
+                }
+                function openModal1(button) {
+                    var productId = button.getAttribute("data-id");
+
+                    // Lấy thông tin sản phẩm từ server
+                    $.ajax({
+                        url: "/Home/GetProductDetails",
+                        type: "GET",
+                        data: { id: productId },
+                        success: function (response) {
+                            // Hiển thị chi tiết sản phẩm trong modal
+                            $("#myModal1").show();
+                            $("#name").val(response.ProductName);
+                            $("#image").val(response.Image);
+                            $("#price").val(response.Price);
+                            $("#quantity").val(response.Quantity);
+                            $("#status").val(response.CategoryId);
+                            console.log(response);
+                        },
+
+                        error: function () {
+                            alert("An error occurred while loading the product details.");
+                        }
+                    });
+                }
+
+                function closeModal1() {
+                    $("#myModal1").hide();
+                }
+
+                // Xử lý khi form được submit
+                $("#updateForm").submit(function (e) {
+                    e.preventDefault();
+
+                    var formData = $(this).serialize();
+                    $.ajax({
+                        url: "/Home/Edit",
+                        type: "POST",
+                        data: formData,
+                        success: function (response) {
+                            // Xử lý khi cập nhật thành công
+                            console.log("Product updated successfully!");
+                            closeModal1();
+                        },
+                        error: function () {
+                            alert("An error occurred while updating the product.");
+                        }
+                    });
+                });
+            </script>
+
+
+
+            <style>
+                .container {
+                    justify-content: center;
+                    align-items: center;
+                    height: 50vh;
+                }
+
+                .open-modal-btn {
+                    position: absolute;
+                    padding: 10px 20px;
+                    background-color: #4CAF50;
+                    color: #fff;
+                    border: none;
+                    border-radius: 4px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    top: 5px;
+                }
+
+                    .open-modal-btn:hover {
+                        background-color: #45a049;
+                    }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+                th, td {
+                    padding: 10px;
+                    text-align: left;
+                    border-bottom: 1px solid #ddd;
+                }
+
+                th {
+                    background-color: #f2f2f2;
+                    font-weight: bold;
+                }
+
+                img {
+                    max-width: 100%;
+                    height: auto;
+                }
+
+                .product-image {
+                    max-width: 100px; /* Điều chỉnh kích thước tối đa của hình ảnh */
+                    height: auto;
+                    .switch
+
+                {
+                    position: relative;
+                    display: inline-block;
+                    width: 40px;
+                    height: 20px;
+                    margin: 0;
+                    padding: 0;
+                    vertical-align: middle;
+                }
+
+                .switch input {
+                    opacity: 0;
+                    width: 0;
+                    height: 0;
+                }
+
+                .slider {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-color: #ccc;
+                    border-radius: 34px;
+                    cursor: pointer;
+                    transition: .4s;
+                }
+
+                    .slider:before {
+                        position: absolute;
+                        content: "";
+                        height: 14px;
+                        width: 14px;
+                        left: 3px;
+                        bottom: 3px;
+                        background-color: white;
+                        border-radius: 50%;
+                        transition: .4s;
+                    }
+
+                input:checked + .slider {
+                    background-color: #2196F3;
+                }
+
+                input:focus + .slider {
+                    box-shadow: 0 0 1px #2196F3;
+                }
+
+                input:checked + .slider:before {
+                    transform: translateX(20px);
+                }
+
+                .slider.round {
+                    border-radius: 34px;
+                }
+
+                    .slider.round:before {
+                        border-radius: 50%;
+                    }
+
+                /* CSS */
+                .modal {
+                    display: none;
+                    position: fixed;
+                    z-index: 1;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    overflow: auto;
+                    background-color: rgba(0, 0, 0, 0.4);
+                }
+
+                .modal-content {
+                    background-color: #fefefe;
+                    margin: 15% auto;
+                    padding: 20px;
+                    border: 1px solid #888;
+                    width: 80%;
+                    max-width: 600px;
+                }
+
+                .close {
+                    color: #aaa;
+                    float: right;
+                    font-size: 28px;
+                    font-weight: bold;
+                }
+
+                    .close:hover,
+                    .close:focus {
+                        color: black;
+                        text-decoration: none;
+                        cursor: pointer;
+                    }
+
+            </style>
+
+
+        <div class="container" >
+                <div style="margin-bottom:50px; display:flex">
+                    <button class="open-modal-btn" onclick="openModal()">Thêm sản phẩm</button>
+                </div>
+                <div>
+                    <button class="open-modal-btn" style="margin-left:200px" onclick="location.href='/Home/Order'">Quản lí order</button>
+                </div>
+                <div>
+                    <button class="open-modal-btn" style="margin-left:400px" onclick="location.href='/Home/Account'">Quản lí account</button>
+                </div>
+            <div data-background="/img/hinh-anh.png">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Product Name</th>
+                                <th>Image</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @functions {
+                            public string FormatCurrency(double price) => price.ToString("N0") + " VNĐ";
+
+                        }
+
+                        @foreach (Product item in ViewBag.list)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.ProductName</td>
+                                    <td><img src="/img/@item.Image" alt="Product Image" class="product-image"></td>
+                                    <td>@FormatCurrency(item.Price)</td>
+                                    <td>@item.Quantity</td>
+                                    <td>
+                                        @if (item.Status == true)
+                                        {
+                                            <div style="display: flex; align-items: center;">
+                                                <p style="margin-right: 60px;">Đang được bán</p>
+                                                <button style="background-color: #3d8b40; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; margin-left: auto;" onclick="location.href='/Home/OnOff?id=@item.Id&&status=0'">Off</button>
+                                            </div>
+
+                                        }
+                                        else
+                                        {
+                                            <div style="display: flex; align-items: center;">
+                                                <p style="margin-right: 60px;">Đã dừng bán</p>
+                                                <button style="background-color: #3d8b40; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; margin-left: auto;" onclick="location.href='/Home/OnOff?id=@item.Id&&status=1'">On</button>
+                                            </div>
+                                        }
+                                    </td>
+                                    <td><button style="background-color: #3d8b40; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease" onclick="location.href='/Home/Edit?id=@item.Id'">Cập nhật</button></td>
+                                </tr>
+
+                            }
+                            <!-- Add more rows here for additional products -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        
+        <!-- HTML -->
+        
+
+
+        <div id="myModal1" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeModal1()">&times;</span>
+                <form id="updateForm" method="post">
+                    <h4>Chỉnh sửa thông tin sản phẩm </h4>
+                    <div class="form-group">
+                        <label for="product-name">Product Name:</label>
+                        <input type="text" id="name" name="ProductName" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image:</label>
+                        <input type="text" id="image" name="Image" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price:</label>
+                        <input type="number" id="price" name="Price" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" name="Quantity" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Danh mục:</label>
+                        <select id="status" name="CategoryId">
+                                @foreach (Category i in ViewBag.lsp)
+                                {
+                                <option value="@i.Id">@i.CategoryName</option>
+                                }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Cập nhật</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        }
+
+    <div>   </div>
+
+
+
+
+    <!-- JS here -->
+    <!-- All JS Custom Plugins Link Here here -->
+    <script src="~/js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="~/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="~/js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/slick.min.js"></script>
+
+    <!-- One Page, Animated-HeadLin -->
+    <script src="~/js/wow.min.js"></script>
+    <script src="~/js/animated.headline.js"></script>
+    <script src="~/js/jquery.magnific-popup.js"></script>
+
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="~/js/jquery.scrollUp.min.js"></script>
+    <script src="~/js/jquery.nice-select.min.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+
+    <!-- contact js -->
+    <script src="~/js/contact.js"></script>
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/jquery.validate.min.js"></script>
+    <script src="~/js/mail-script.js"></script>
+    <script src="~/js/jquery.ajaxchimp.min.js"></script>
+
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="~/js/plugins.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/jquery-1.12.1.min.js"></script>
+    <script src="~/js/swiper.jquery.js"></script>
+
+
+
+
+</body>
+
+</html>

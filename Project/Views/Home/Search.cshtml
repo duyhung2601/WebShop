@@ -1,0 +1,685 @@
+﻿@model IEnumerable<Project.Models.Product>
+
+@{
+    ViewData["Title"] = "Search";
+    Layout = null;
+    ShopContext context = new ShopContext();
+}
+@using Project.Models;
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@ViewData["Title"]  </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/flaticon.css">
+    <link rel="stylesheet" href="~/css/slicknav.css">
+    <link rel="stylesheet" href="~/css/animate.min.css">
+    <link rel="stylesheet" href="~/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="~/css/themify-icons.css">
+    <link rel="stylesheet" href="~/css/slick.css">
+    <link rel="stylesheet" href="~/css/nice-select.css">
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+
+<body>
+
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="~/img/logo/logo.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start -->
+
+    <header>
+        <!-- Header Start -->
+        @if (ViewBag.id == null)
+        {
+            <div class="header-area">
+                <div class="main-header ">
+                    <div class="header-bottom  header-sticky">
+                        <div class="container-fluid">
+                            <div class="row align-items-center">
+                                <!-- Logo -->
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3">
+                                    <div class="logo">
+                                        <a href="/Home"><img src="~/img/logo/logo.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-8 col-md-7 col-sm-5">
+                                    <!-- Main-menu -->
+                                    <div class="main-menu f-right d-none d-lg-block">
+                                        <nav>
+                                            <ul id="navigation">
+                                                <li><a style="align-items:center" href="/Home">Home</a></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-3 col-md-3 col-sm-3 fix-card">
+                                    <ul class="header-right f-right d-none d-lg-block d-flex justify-content-between">
+                                        <li class="d-none d-xl-block">
+                                            <div class="form-box f-right ">
+                                                <input type="text" name="Search" placeholder="Search products">
+                                                <div class="search-icon">
+                                                    <i class="fas fa-search special-tag"></i>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li class="d-none d-lg-block"> <a href="/Home/FormLogin" class="btn header-btn">Login</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Mobile Menu -->
+                                <div class="col-12">
+                                    <div class="mobile_menu d-block d-lg-none"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="header-area">
+                <div class="main-header ">
+                    <div class="header-bottom  header-sticky">
+                        <div class="container-fluid">
+                            <div class="row align-items-center">
+                                <!-- Logo -->
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3">
+                                    <div class="logo">
+                                        <a href="/Home"><img src="~/img/logo/logo.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-8 col-md-7 col-sm-5">
+                                    <!-- Main-menu -->
+                                    <div class="main-menu f-right d-none d-lg-block">
+                                        <nav>
+                                            <ul id="navigation">
+                                                <li><a href="/Home">Home</a></li>
+                                                <li><a href="/Home/Transaction?id=@ViewBag.id">Transaction</a></li>
+                                                <li><a href="contact.html"></a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-3 col-md-3 col-sm-3 fix-card">
+                                    <ul class="header-right f-right d-none d-lg-block d-flex justify-content-between">
+                                        <li class="d-none d-xl-block">
+                                            <div class="form-box f-right ">
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="shopping-card">
+                                                <a href="/Home/Cart"><i class="fas fa-shopping-cart">@ViewBag.sum</i></a>
+                                            </div>
+                                        </li>
+                                        @if (ViewBag.role == "1")
+                                        {
+                                            <li class="d-none d-lg-block"><a class="btn header-btn" href="/Home/Admin">Hello @ViewBag.name</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li class="d-none d-lg-block"><a class="btn header-btn" href="/Home">Hello @ViewBag.name</a></li>
+                                        }
+                                        <li class="d-none d-lg-block"> <a href="/Home/Thoat" class="btn header-btn">Logout</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Mobile Menu -->
+                                <div class="col-12">
+                                    <div class="mobile_menu d-block d-lg-none"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <!-- Header End -->
+    </header>
+
+    <main>
+
+        <!-- slider Area Start -->
+        <div class="slider-area ">
+            <!-- Mobile Menu -->
+            <div class="slider-active">
+                <div class="single-slider slider-height" data-background="/img/hero/h1_hero.jpg">
+                    <div class="container">
+                        <div class="row d-flex align-items-center justify-content-between">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 d-none d-md-block">
+                                <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
+                                    <img src="~/img/hero/hero_man.png" alt="">
+                                </div>
+                            </div>
+                            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-8">
+                                <div class="hero__caption">
+                                    <span data-animation="fadeInRight" data-delay=".4s">60% Discount</span>
+                                    <h1 data-animation="fadeInRight" data-delay=".6s">Winter <br> Collection</h1>
+                                    <p data-animation="fadeInRight" data-delay=".8s">Best Cloth Collection By 2020!</p>
+                                    <!-- Hero-btn -->
+                                    <div class="hero__btn" data-animation="fadeInRight" data-delay="1s">
+                                        <a href="industries.html" class="btn hero-btn">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-slider slider-height" data-background="~/img/hero/h1_hero.jpg">
+                    <div class="container">
+                        <div class="row d-flex align-items-center justify-content-between">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 d-none d-md-block">
+                                <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
+                                    <img src="~/img/hero/hero_man.png" alt="">
+                                </div>
+                            </div>
+                            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-8">
+                                <div class="hero__caption">
+                                    <span data-animation="fadeInRight" data-delay=".4s">60% Discount</span>
+                                    <h1 data-animation="fadeInRight" data-delay=".6s">Winter <br> Collection</h1>
+                                    <p data-animation="fadeInRight" data-delay=".8s">Best Cloth Collection By 2020!</p>
+                                    <!-- Hero-btn -->
+                                    <div class="hero__btn" data-animation="fadeInRight" data-delay="1s">
+                                        <a href="industries.html" class="btn hero-btn">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- slider Area End-->
+        <!-- Category Area Start-->
+        <!-- Category Area End-->
+        <!-- Latest Products Start -->
+        <section class="latest-product-area padding-bottom" style="margin-top:20px">
+            <div class="container">
+                <div class="row product-btn d-flex justify-content-end align-items-end">
+                    <!-- Section Tittle -->
+                    <div class="col-xl-4 col-lg-5 col-md-5">
+                        <div class="section-tittle mb-30" style="align-items:center">
+                            <h2>Latest Products</h2>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-lg-7 col-md-7">
+                    </div>
+
+                </div>
+
+                <div class="col-md-3 product_sidebar">
+                    <div class="single_sedebar">
+                        <form action="/Home/Search" method="post">
+                            <input type="search" name="search" placeholder="Search keyword">
+                            <i class="ti-search"></i>
+                        </form>
+                    </div>
+
+
+                    
+                </div>
+
+                @functions {
+                    public string FormatCurrency(double price) => price.ToString("N0") + " VNĐ";
+                }
+
+                <style>
+                    .product-item {
+                        margin-right: 5px;
+                    }
+
+                        .product-item:last-child {
+                            margin-right: 0;
+                        }
+
+                    .buy-button {
+                        background-color: #4CAF50;
+                        color: white;
+                        border: none;
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        top: 2px;
+                    }
+
+                        .buy-button:hover {
+                            background-color: #45a049;
+                        }
+                    /* Kiểu dáng cho button "Buy Now" */
+                    .product-caption .buy-button {
+                        position: relative;
+                        z-index: 1;
+                    }
+
+
+                    /* Căn chỉnh các phần tử trong container của slider */
+                    .product-slider {
+                        margin: 0 auto;
+                        max-width: 1200px; /* Điều chỉnh chiều rộng tối đa của slider */
+                    }
+
+                    /* Thẻ bao quanh mỗi sản phẩm */
+                    .single-product {
+                        text-align: center;
+                        margin-bottom: 30px;
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+
+
+                        /* Hiệu ứng hover cho sản phẩm */
+                        .single-product:hover .product-img img {
+                            transform: scale(1.1);
+                        }
+
+                    /* Kiểu dáng cho tiêu đề sản phẩm */
+                    .product-caption h4 {
+                        font-size: 18px;
+                        font-weight: bold;
+                        margin-top: 10px;
+                    }
+
+                    /* Kiểu dáng cho giá và số lượng sản phẩm */
+                    .price ul {
+                        list-style: none;
+                        padding: 0;
+                        margin: 10px 0;
+                    }
+
+                        .price ul li {
+                            font-size: 14px;
+                            color: #888;
+                        }
+
+                    /* Kiểu dáng cho nút Previous và Next */
+                    .slick-prev,
+                    .slick-next {
+                        position: absolute;
+                        transform: translateY(-50%);
+                        background-color: #000;
+                        color: #fff;
+                        padding: 10px;
+                        border: none;
+                        outline: none;
+                        cursor: pointer;
+                        z-index: 1;
+                        transition: background-color 0.3s ease;
+                        margin-top: 20px;
+                    }
+
+                        .slick-prev:hover,
+                        .slick-next:hover {
+                            background-color: #333;
+                        }
+
+                    .slick-prev {
+                        left: 10px;
+                    }
+
+                    .slick-next {
+                        right: 10px;
+                    }
+                    /* Kiểu dáng cho số phân trang */
+                    .slick-dots {
+                        display: flex;
+                        justify-content: center;
+                        margin: 20px 0;
+                        list-style: none;
+                        padding: 0;
+                    }
+
+                        .slick-dots li {
+                            margin: 0 5px;
+                        }
+
+                            .slick-dots li button {
+                                display: block;
+                                width: 20px;
+                                height: 20px;
+                                border: none;
+                                border-radius: 50%;
+                                background-color: #ddd;
+                                color: #333;
+                                text-align: center;
+                                font-size: 12px;
+                                line-height: 20px;
+                                cursor: pointer;
+                                transition: background-color 0.3s ease;
+                            }
+
+                            .slick-dots li.slick-active button {
+                                background-color: #333;
+                                color: #fff;
+                            }
+
+                </style>
+                <!-- Nav Card -->
+                <section class="latest-product-area padding-bottom">
+                    <div class="container">
+                        <div class="row product-btn d-flex justify-content-end align-items-end">
+                            <!-- Section Tittle -->
+                            <div class="col-xl-4 col-lg-5 col-md-5">
+                                <div class="section-tittle mb-30">
+                                </div>
+                            </div>
+                            <div class="col-xl-8 col-lg-7 col-md-7">
+                                <div class="properties__button f-right">
+                                    <!--Nav Button  -->
+                                    <!--End Nav Button  -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Nav Card -->
+
+                        <div class="product-slider">
+                            <div class="row">
+                                @if (!string.IsNullOrEmpty(ViewBag.Message))
+                                {
+                                    <p>@ViewBag.Message</p>
+                                }
+                                else
+                                {
+                                    @foreach (Product item in ViewBag.listsp)
+                                    {
+                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                            <div class="single-product mb-60">
+                                                <div class="product-img" style="height:360px;object-fit: cover;">
+                                                    <div style="height:100px">
+                                                        <img src="@item.Image" alt="">
+                                                    </div>
+                                                    <div class="new-product">
+                                                        <span>New</span>
+                                                    </div>
+                                                </div>
+                                                <div class="product-caption">
+                                                    @*<div class="container"a>*@
+                                                    <div style="height:50px">
+                                                        <h4 class="h-50" style="height:100px">@item.ProductName</h4>
+                                                    </div>
+                                                    <div class="price">
+                                                        <ul>
+                                                            <li>Price: @FormatCurrency(item.Price)</li>
+                                                            <li>Số lượng: @item.Quantity</li>
+                                                        </ul>
+                                                    </div>
+                                                    @*</div>*@
+                                                    @if (ViewBag.id != null)
+                                                    {
+                                                        if (ViewBag.role == "2")
+                                                        {
+                                                            <div style="margin-top: 20px;height:50px">
+                                                                <a class="buy-button" href="/Home/Addcart?id=@item.Id">Buy now</a>
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div style="margin-top: 20px;height:50px">
+                                                            <a class="buy-button" href="/Home/FormLogin">Buy now</a>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- End Nav Card -->
+
+                </section>
+
+                <script>
+                    $(document).ready(function () {
+                        $('.product-slider .row').slick({
+                            slidesToShow: 3,
+                            slidesToScroll: 3,
+                            dots: true,
+                            responsive: [
+                                {
+                                    breakpoint: 992,
+                                    settings: {
+                                        slidesToShow: 2,
+                                        slidesToScroll: 2
+                                    }
+                                },
+                                {
+                                    breakpoint: 768,
+                                    settings: {
+                                        slidesToShow: 1,
+                                        slidesToScroll: 1
+                                    }
+                                }
+                            ]
+                        });
+                    });
+                </script>
+
+
+
+                <!-- End Nav Card -->
+            </div>
+
+            <!-- Latest Products End -->
+            <!-- Best Product Start -->
+            <div class="best-product-area lf-padding">
+                <div class="product-wrapper bg-height" style="background-image: url('~/img/categori/card.png')">
+                    <div class="container position-relative">
+                        <div class="row justify-content-between align-items-end">
+                            <div class="product-man position-absolute  d-none d-lg-block">
+                                <img src="~/img/categori/card-man.png" alt="">
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-md-2 d-none d-lg-block">
+                                <div class="vertical-text">
+                                    <span>Manz</span>
+                                </div>
+                            </div>
+                            <div class="col-xl-8 col-lg-8">
+                                <div class="best-product-caption">
+                                    <h2>Find The Best Product<br> from Our Shop</h2>
+                                    <p>Designers who are interesten creating state ofthe.</p>
+                                    <a href="#" class="black-btn">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Shape -->
+                <div class="shape bounce-animate d-none d-md-block">
+                    <img src="~/img/categori/card-shape.png" alt="">
+                </div>
+            </div>
+            <!-- Best Product End-->
+            <!-- Best Collection Start -->
+            <
+            <!-- Shop Method End-->
+            <!-- Gallery Start-->
+            <div class="gallery-wrapper lf-padding">
+                <div class="gallery-area">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="gallery-items">
+                                <img src="~/img/gallery/gallery1.jpg" alt="">
+                            </div>
+                            <div class="gallery-items">
+                                <img src="~/img/gallery/gallery2.jpg" alt="">
+                            </div>
+                            <div class="gallery-items">
+                                <img src="~/img/gallery/gallery3.jpg" alt="">
+                            </div>
+                            <div class="gallery-items">
+                                <img src="~/img/gallery/gallery4.jpg" alt="">
+                            </div>
+                            <div class="gallery-items">
+                                <img src="~/img/gallery/gallery5.jpg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Gallery End-->
+
+    </main>
+
+    </main>
+    <footer>
+
+        <!-- Footer Start-->
+        <div class="footer-area footer-padding">
+            <div class="container">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
+                        <div class="single-footer-caption mb-50">
+                            <div class="single-footer-caption mb-30">
+                                <!-- logo -->
+                                <div class="footer-logo">
+                                    <a href="index.html"><img src="~/img/logo/logo2_footer.png" alt=""></a>
+                                </div>
+                                <div class="footer-tittle">
+                                    <div class="footer-pera">
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod
+                                            tempor incididunt ut labore.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Quick Links</h4>
+                                <ul>
+                                    <li><a href="#">About</a></li>
+                                    <li><a href="#"> Offers & Discounts</a></li>
+                                    <li><a href="#"> Get Coupon</a></li>
+                                    <li><a href="#"> Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>New Products</h4>
+                                <ul>
+                                    <li><a href="#">Woman Cloth</a></li>
+                                    <li><a href="#">Fashion Accessories</a></li>
+                                    <li><a href="#"> Man Accessories</a></li>
+                                    <li><a href="#"> Rubber made Toys</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Support</h4>
+                                <ul>
+                                    <li><a href="#">Frequently Asked Questions</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Report a Payment Issue</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer bottom -->
+                <div class="row">
+                    <div class="col-xl-7 col-lg-7 col-md-7">
+                        <div class="footer-copy-right">
+                            <p>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> All rights reserved | This
+                                template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-5 col-md-5">
+                        <div class="footer-copy-right f-right">
+                            <!-- social -->
+                            <div class="footer-social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-behance"></i></a>
+                                <a href="#"><i class="fas fa-globe"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End-->
+
+    </footer>
+
+    <!-- JS here -->
+    <!-- All JS Custom Plugins Link Here here -->
+    <script src="~/js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="~/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="~/js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/slick.min.js"></script>
+
+    <!-- One Page, Animated-HeadLin -->
+    <script src="~/js/wow.min.js"></script>
+    <script src="~/js/animated.headline.js"></script>
+    <script src="~/js/jquery.magnific-popup.js"></script>
+
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="~/js/jquery.scrollUp.min.js"></script>
+    <script src="~/js/jquery.nice-select.min.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+
+    <!-- contact js -->
+    <script src="~/js/contact.js"></script>
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/jquery.validate.min.js"></script>
+    <script src="~/js/mail-script.js"></script>
+    <script src="~/js/jquery.ajaxchimp.min.js"></script>
+
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="~/js/plugins.js"></script>
+    <script src="~/js/main.js"></script>
+
+</body>
+
+</html>

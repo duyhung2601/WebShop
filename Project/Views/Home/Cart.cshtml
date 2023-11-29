@@ -1,0 +1,342 @@
+﻿@{
+    ViewData["Title"] = "Cart";
+    Layout = null;
+    ShopContext context = new ShopContext();
+}
+@using Project.Models;
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@ViewData["Title"]  </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+        
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+
+<body>
+
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="~/img/logo/logo.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start -->
+    <style>
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Chiều cao của trang */
+        }
+    </style>
+    <header>
+
+        <!-- Header Start -->
+        @if (ViewBag.id == null)
+        {
+            <div class="header-area">
+                <div class="main-header ">
+                    <div class="header-bottom  header-sticky">
+                        <div class="container-fluid">
+                            <div class="row align-items-center">
+                                <!-- Logo -->
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3">
+                                    <div class="logo">
+                                        <a href="/Home"><img src="~/img/logo/logo.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-8 col-md-7 col-sm-5">
+                                    <!-- Main-menu -->
+                                    <div class="main-menu f-right d-none d-lg-block">
+                                        <nav>
+                                            <ul id="navigation">
+                                                <li><a href="/Home">Home</a></li>
+                                                <li><a href="Catagori.html">Product</a></li>
+                                                <li><a href="contact.html">Contact</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-3 col-md-3 col-sm-3 fix-card">
+                                    <ul class="header-right f-right d-none d-lg-block d-flex justify-content-between">
+                                        <li class="d-none d-xl-block">
+                                            <div class="form-box f-right ">
+                                                <input type="text" name="Search" placeholder="Search products">
+                                                <div class="search-icon">
+                                                    <i class="fas fa-search special-tag"></i>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            
+                                        </li>
+                                        <li class="d-none d-lg-block"> <a href="/Home/FormLogin" class="btn header-btn">Login</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Mobile Menu -->
+                                <div class="col-12">
+                                    <div class="mobile_menu d-block d-lg-none"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="header-area">
+                <div class="main-header ">
+                    <div class="header-bottom  header-sticky">
+                        <div class="container-fluid">
+                            <div class="row align-items-center">
+                                <!-- Logo -->
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3">
+                                    <div class="logo">
+                                        <a href="/Home"><img src="~/img/logo/logo.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-8 col-md-7 col-sm-5">
+                                    <!-- Main-menu -->
+                                    <div class="main-menu f-right d-none d-lg-block">
+                                        <nav>
+                                            <ul id="navigation">
+                                                <li><a href="/Home">Home</a></li>
+                                                <li><a href="Catagori.html">Product</a></li>
+                                                <li><a href="contact.html">Contact</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-3 col-md-3 col-sm-3 fix-card">
+                                    <ul class="header-right f-right d-none d-lg-block d-flex justify-content-between">
+                                        <li class="d-none d-xl-block">
+                                            <div class="form-box f-right ">
+                                                <input type="text" name="Search" placeholder="Search products">
+                                                <div class="search-icon">
+                                                    <i class="fas fa-search special-tag"></i>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+
+                                        </li>
+                                        <li class="d-none d-lg-block">Hello @ViewBag.name</li>
+                                        <li class="d-none d-lg-block"> <a href="/Home/Thoat" class="btn header-btn">Logout</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Mobile Menu -->
+                                <div class="col-12">
+                                    <div class="mobile_menu d-block d-lg-none"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <!-- Header End -->
+    </header>
+
+    <main>
+        @if (ViewBag.cart != null)
+        {
+            <section class="cart_area section_padding">
+                <div class="container">
+                    <div class="cart_inner">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    
+                                </thead>
+                                @foreach (KeyValuePair<int, int> item in ViewBag.cart)
+                                {
+                                    Product p = new Product();
+                                    p = context.Products.Where(x => x.Id == item.Key).SingleOrDefault();
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="media">
+                                                    <div class="d-flex">
+                                                        <img src="@p.Image" alt="" />
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <p>@p.ProductName</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <h5>@FormatCurrency(p.Price)</h5>
+                                            </td>
+                                            <td>
+                                                <div class="product_count">
+                                                     @*<input type="text" value="1" min="0" max="10" title="Quantity:"
+                                                      class="input-text qty input-number" />
+                                                    <button
+                                                      class="increase input-number-increment items-count" type="button">
+                                                      <i class="ti-angle-up"></i>
+                                                    </button>
+                                                    <button
+                                                      class="reduced input-number-decrement items-count" type="button">
+                                                      <i class="ti-angle-down"></i>
+                                                    </button> *@
+                                                    
+                                                    <button class="control-button minus" onclick="location.href='/Home/Decrease?id=@p.Id'">-</button>
+                                                    <input class="input-number" type="text" style="height:30px; padding-right:30px" value="@item.Value" min="1" max="10">
+                                                    <button class="control-button plus" onclick="location.href='/Home/Increase?id=@p.Id'">+</button>
+                                                    
+                                                </div>
+                                            </td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                }
+                                @functions {
+                    public string FormatCurrency(double price) => price.ToString("N0") + " VNĐ";
+                }
+                                <tr>
+                                    <td>Total</td>
+                                    
+                                    <td>@FormatCurrency(ViewBag.sum)</td>
+                                </tr>
+                                <div style="margin-bottom:20px">
+                                    <form action="/Home/AddOrder?sum=@ViewBag.sum" method="post">
+                                        <table>
+                                            <tr>
+                                                <td>Địa chỉ nhận hàng</td>
+                                                <td style="padding-left: 10px;"></td>
+                                                <td></td>
+                                                <td><textarea name="address" rows="2" cols="50" style="border-radius:5px"></textarea></td>
+                                            </tr>
+                                        </table>
+                                        <button style="color: black; display: inline-block; padding: 10px 20px; background-color: #ccc; text-decoration: none;" type="submit">Thanh Toán</button>
+                                    </form>
+                                </div
+                                
+                                <tr class="bottom_button">
+                                    
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+            </section>
+        }
+        else
+        {
+            <div class="center">
+                <h4>Giỏ hàng không có sản phẩm nào</h4>
+            </div>
+        }
+    </main>
+    <style>
+    .control-button {
+  width: 30px;
+  height: 30px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0 5px;
+
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* CSS khi hover lên button */
+.control-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* CSS khi nhấn nút */
+.control-button:active {
+  transform: scale(0.9);
+}
+
+/* CSS khi nút đã bị vô hiệu hóa */
+.control-button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Tùy chỉnh màu chữ và background trong button "-" */
+.control-button.minus {
+  color: #ffffff; /* Màu trắng */
+  background-color: #ff6347; /* Màu đỏ */
+}
+
+/* Tùy chỉnh màu chữ và background trong button "+" */
+.control-button.plus {
+  color: #ffffff; /* Màu trắng */
+  background-color: #32cd32; /* Màu xanh lá cây */
+}
+    </style>
+  
+
+    <!-- JS here -->
+    <!-- All JS Custom Plugins Link Here here -->
+    <script src="~/js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="~/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="~/js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/slick.min.js"></script>
+
+    <!-- One Page, Animated-HeadLin -->
+    <script src="~/js/wow.min.js"></script>
+    <script src="~/js/animated.headline.js"></script>
+    <script src="~/js/jquery.magnific-popup.js"></script>
+
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="~/js/jquery.scrollUp.min.js"></script>
+    <script src="~/js/jquery.nice-select.min.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+
+    <!-- contact js -->
+    <script src="~/js/contact.js"></script>
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/jquery.validate.min.js"></script>
+    <script src="~/js/mail-script.js"></script>
+    <script src="~/js/jquery.ajaxchimp.min.js"></script>
+
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="~/js/plugins.js"></script>
+    <script src="~/js/main.js"></script>
+
+</body>
+
+</html>
